@@ -15,22 +15,30 @@
     <link rel="stylesheet" href="assets/css/mystyles.css">
   </head>
   <body>
-    <div class="container">
+    <div class="bg-light" id="wrapper">
+      <header>
+        <nav class="navbar narbar-light bg-white">
+          <span class="navbar-brand h1">Academy Eth Scan</span>
+          <span class="navbar-text">An Ivan On Tech Bootcamp example project</span>
+        </nav>
+      </header>
 
-      <h1>Academy Eth Scan</h1>
-      <p>An Ivan On Tech Bootcamp example project</p>
+      <div class="container" id="main-content">
 
-      <div class="form-inline">
-        <input type="text" class="form-control" name="txtSearch" id="txtSearch">
-        <button type="button" class="btn btn-primary ml-2" id="btnSearch">Search</button>
-      </div>
+        <div class="input-group mt-4">
+          <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="search not yet implemented">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-primary" id="btnSearch">Search</button>
+          </div>          
+        </div>
+
+        <div>
+          <!-- container for latest transactions -->
+          <div class="mt-2" id="divLatestTrans"></div>
+        </div>
+
     </div>
 
-    <div class="container">
-      <!-- container for latest transactions -->
-      <div class="container mt-2" id="divLatestTrans"></div>
-    </div>
-    
     <!-- load our scripts -->
     <script type="text/javascript" src="index.js"></script>
   </body>

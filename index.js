@@ -59,36 +59,60 @@ const DATASOURCE = datasources.live;
     ];
 
     let divLatestTrans = $('#divLatestTrans');
-    divLatestTrans.append(`<h5>Block #${block.number}</h5>`);
 
     // block header
-    blockInfo.forEach(item => divLatestTrans.append(`<p>${item.name}: ${item.val}</p>`));
+    let divBlockInfo = $('<div class="card bg-white" id="block-info"></div>')
+      .append(`<div class="card-header bg-white">Latest Block #${block.number}</div>`);
+
+    let blockCardBody = $('<div class="card-body"></div>');
+    blockInfo.forEach(item => blockCardBody.append(`<p>${item.name}: ${item.val}</p>`));
+    divBlockInfo.append(blockCardBody);
+    divLatestTrans.append(divBlockInfo);
 
     // transactions
-    let elements = `
-      <table class="table">
-        <thead>          
-    `;
-    tableInfo.forEach(item => elements +=
-      `   <th scope="col">${item.header}</th>`);
-    elements += `
-        </thead>
-        <tbody>
-          `;
-    block.transactions.forEach(trans => {
-      elements +=
-        `   <tr>`;
-      tableInfo.forEach(cell => elements +=
-        `     <td>${cell.value(trans)}</td>
-        `);
-      elements +=
-        `    </tr>`;
+    let divTrans = $('<div class="card bg-white mt-2" id="trans-info"></div>')
+      .append('<div class="card-header bg-white">Latest Transactions</div>');
+    let transCardBody = $('<div class="card-body"></div>');
+    divTrans.append(transCardBody);
 
-    });
-    elements += `
-        </tbody>
-      </table>`;
-    divLatestTrans.append(elements);
+    block.transactions.forEach(trans => transCardBody.append(createTransCardRow(trans)));    
+    divLatestTrans.append(divTrans);
+  }
+
+  function createTransCardRow(trans) {
+    let html = `
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="align-items-sm-center mb-1 media mr-4">
+            <div class="d-sm-flex mr-2">
+              <span class="btn btn-soft-secondary rounded-circle">Tx</span>
+            </div>
+            <div class="media-body">
+              <a class="hash-tag text-truncate" href="#">${trans.hash}</a>
+              <span>XX ago</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="d-sm-flex justify-content-between">
+            <div class="text-nowrap mr-4">
+              <span>
+                From <a class="hash-tag text-truncate" href="#">${trans.from}</a>
+              </span>
+              <span class="d-sm-block">
+                To <a class="hash-tag text-truncate" href="#">${trans.to}</a>
+              </span>
+            </div>
+            <div>
+              <span>${web3.utils.fromWei(trans.value, "ether")} ETH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="hr-space">
+    `;
+    console.log('createTransRow html', html);
+    return html;
   }
 
   async function getLatestTransactiions() {

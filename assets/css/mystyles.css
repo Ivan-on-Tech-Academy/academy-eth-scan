@@ -1,3 +1,44 @@
+body {
+    margin: 0;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: .8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #1e2022;
+    text-align: left;
+    background-color: #fff;
+}
+
 th {
     background-color: #F8FAFD;
+}
+
+.hr-space {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.75;
+}
+
+.btn-icon {
+    position: relative;
+    line-height: 0;
+    font-size: .8125rem;
+    width: 2.53906rem;
+    height: 2.53906rem;
+    padding: 0;
+}
+
+.btn-soft-secondary {
+    color: #77838f;
+    background: rgba(119,131,143,.1);
+    border-color: transparent;
+}
+.rounded-circle {
+    border-radius: 50%!important;
+}
+
+.hash-tag {
+    max-width: 132px;
+    display: inline-block;
+    vertical-align: bottom;
 }
