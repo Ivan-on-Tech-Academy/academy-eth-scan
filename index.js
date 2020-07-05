@@ -87,7 +87,7 @@ const PAGE_SIZE = 5;
               <span class="btn btn-soft-secondary">Bk</span>
             </div>
             <div class="media-body">
-              <a href="#">${block.number}</a>
+              <a class="block-link" href="#">${block.number}</a>
               <span class="d-sm-block small text-secondary">XX ago</span>
             </div>
           </div>
@@ -99,7 +99,7 @@ const PAGE_SIZE = 5;
                 Miner <a class="hash-tag text-truncate" href="#">${block.miner}</a>
               </span>
               <span class="d-sm-block">
-                <a class="hash-tag text-truncate" href="#">${block.transactions.length} txns</a>
+                <a class="hash-tag text-truncate block-trans-link" href="#">${block.transactions.length} txns</a>
                 <span class="small text-secondary">in XX sec</span>
               </span>
             </div>
@@ -183,15 +183,16 @@ const PAGE_SIZE = 5;
 
   function renderBlockDetailCard(block) {
     const blockInfo = [
-      { name: "Timestamp", val: new Date(block.timestamp) },
-      { name: "Transactions", val: block.transactions.length },
-      { name: "Mined By", val: block.miner },
-      { name: "Block Reward", val: "need to calc this" },
-      { name: "Difficulty", val: block.difficulty },
-      { name: "Size", val: block.size },
-      { name: "Gas Used", val: block.gasUsed },
-      { name: "Gas Limit", val: block.gasLimit },
-      { name: "Extra Data", val: block.extraData }
+      { name: "Block Height", value: block.number },
+      { name: "Timestamp", value: new Date(block.timestamp) },
+      { name: "Transactions", value: block.transactions.length },
+      { name: "Mined By", value: block.miner },
+      { name: "Block Reward", value: "need to calc this" },
+      { name: "Difficulty", value: block.difficulty },
+      { name: "Size", value: block.size },
+      { name: "Gas Used", value: block.gasUsed },
+      { name: "Gas Limit", value: block.gasLimit },
+      { name: "Extra Data", value: block.extraData }
     ];
     renderDetailCard(blockInfo, 'Block');
   }
@@ -220,8 +221,27 @@ const PAGE_SIZE = 5;
       .show();
   }
 
+  /* 
+    Event handlers
+  */
+
+  $('#latest').on('click', 'a.block-link', () => onBlockLinkClicked())
+
+  async function onBlockLinkClicked() {
+    let link = $('this');
+    let blockNumber = link.prevObject[0].activeElement.innerText;
+    console.log('block link clicked: ', blockNumber);
+
+    let block = await findBlock(blockNumber);
+    console.log('block: ', block);
+    renderBlockDetailCard(block);
+  }
+
+  function findBlock(blockNumber) {
+    return web3.eth.getBlock(blockNumber);
+  }
+
   // render default view
   getLatestTransactiions();
 
 })();
-
