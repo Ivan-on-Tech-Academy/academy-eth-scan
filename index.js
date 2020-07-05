@@ -6,7 +6,7 @@ const datasources = {
   live: 'LIVE',
   dev: 'DEV'
 }
-const DATASOURCE = datasources.live;
+const DATASOURCE = datasources.dev;
 const PAGE_SIZE = 5;
 
 (function () {
