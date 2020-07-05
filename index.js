@@ -14,9 +14,26 @@ const PAGE_SIZE = 5;
   txtSearch = $('#txtSearch');
   btnSearch = $('#btnSearch');
 
-  btnSearch.click(() => {
+  btnSearch.click(async () => {
     console.log("Search for: ", txtSearch.val());
+    let trans = {};
+    if (DATASOURCE == datasources.live) {
+      trans = await search(txtSearch.val());
+    } else {
+      let blocks = await getLatestBlockData();
+      trans = blocks[0].transactions[0];
+    }
+    console.log('search results: ', trans);
+    renderTransDetailCard(trans);
   });
+
+  async function search(txHash) {
+    if (!txHash) {
+      return;
+    }
+    let tx = await web3.eth.getTransaction(txHash);
+    return tx;
+  }
 
   async function getLatestBlockData() {
     let blocks = [];
@@ -38,44 +55,20 @@ const PAGE_SIZE = 5;
   }
 
   function renderLatestTransactions(blocks) {
-    // createBlockDetailCard(blocks[0]);
+    $('#detail').hide();
     createCardList($('#divLatestBlocks'), 'block', blocks);
     createCardList($('#divLatestTrans'), 'transaction', blocks[0]);
-  }
-
-  function createBlockDetailCard(block) {
-    const blockInfo = [
-      { name: "Timestamp", val: new Date(block.timestamp) },
-      { name: "Transactions", val: block.transactions.length },
-      { name: "Mined By", val: block.miner },
-      { name: "Block Reward", val: "need to calc this" },
-      { name: "Difficulty", val: block.difficulty },
-      { name: "Size", val: block.size },
-      { name: "Gas Used", val: block.gasUsed },
-      { name: "Gas Limit", val: block.gasLimit },
-      { name: "Extra Data", val: block.extraData }
-    ];
-
-    let divLatestBlocks = $('#divLatestBlocks');
-
-    // block header
-    let divBlockInfo = $('<div class="card bg-white" id="block-info"></div>')
-      .append(`<div class="card-header bg-white">Latest Block #${block.number}</div>`);
-
-    // details
-    let blockCardBody = $('<div class="card-body"></div>');
-    blockInfo.forEach(item => blockCardBody.append(`<p>${item.name}: ${item.val}</p>`));
-    divBlockInfo.append(blockCardBody);
-    divLatestBlocks.append(divBlockInfo);
+    $('#latest').show();
   }
 
   function createCardList(container, type, data) {
+    container.empty();
     let cardTitle = type === 'block' ? "Blocks" : "Transactions";
     let divCardBody = $('<div class="card-body"></div>');
     let divCard = $('<div class="card bg-white mt-2"></div>')
       .append(`<div class="card-header bg-white">Latest ${cardTitle}</div>`)
       .append(divCardBody);
-    
+
     if (type === 'block') {
       data.forEach(block => divCardBody.append(createBlockCardRow(block)));
     } else {
@@ -84,17 +77,6 @@ const PAGE_SIZE = 5;
 
     container.append(divCard);
   }
-
-  // function createTransCard(block) {
-  //   let divLatestTrans = $('#divLatestTrans');
-  //   let divTrans = $('<div class="card bg-white mt-2" id="trans-info"></div>')
-  //     .append('<div class="card-header bg-white">Latest Transactions</div>');
-  //   let transCardBody = $('<div class="card-body"></div>');
-  //   divTrans.append(transCardBody);
-
-  //   block.transactions.forEach(trans => transCardBody.append(createTransCardRow(trans)));
-  //   divLatestTrans.append(divTrans);
-  // }
 
   function createBlockCardRow(block) {
     let html = `
@@ -174,6 +156,71 @@ const PAGE_SIZE = 5;
     renderLatestTransactions(data);
   }
 
+  /*
+    Detail views
+  */
+
+  function renderTransDetailCard(trans) {
+    const transInfo = [
+      { name: "Transaction Hash:", value: trans.hash },
+      { name: "Status:", value: trans.blockHash ? "Confirmed" : "Pending" },
+      { name: "Block:", value: trans.blockNumber },
+      { name: "Timestamp:", value: "calc this" },
+      { name: "From:", value: trans.from },
+      { name: "To:", value: trans.to },
+      { name: "Value", value: trans.value },
+      {
+        name: "Transaction Fee", value: (() => {
+          let gasPrice = new BN(trans.gasPrice);
+          let gasProvided = new BN(trans.gas);
+          let fee = gasProvided.mul(gasPrice);
+          return `${web3.utils.fromWei(fee, "ether")} ETH`;
+        })()
+      },
+    ];
+    renderDetailCard(transInfo, "Transaction");
+  }
+
+  function renderBlockDetailCard(block) {
+    const blockInfo = [
+      { name: "Timestamp", val: new Date(block.timestamp) },
+      { name: "Transactions", val: block.transactions.length },
+      { name: "Mined By", val: block.miner },
+      { name: "Block Reward", val: "need to calc this" },
+      { name: "Difficulty", val: block.difficulty },
+      { name: "Size", val: block.size },
+      { name: "Gas Used", val: block.gasUsed },
+      { name: "Gas Limit", val: block.gasLimit },
+      { name: "Extra Data", val: block.extraData }
+    ];
+    renderDetailCard(blockInfo, 'Block');
+  }
+
+  function renderDetailCard(items, type) {
+    $('#latest').hide();
+    let divDetail = $('#detail');
+
+    let cardBody = $('<div class="card-body"></div>');
+    let divCard = $('<div class="card bg-white mt-2" id="block-info"></div>')
+      .append(`<div class="card-header bg-white font-weight-bold">${type} Details</div>`)
+      .append(cardBody);
+
+    // rows
+    items.forEach(item => cardBody.append(`
+    <div class="row align-items-center mt-1">
+      <div class="col-md-3 font-weight-bold">${item.name}</div>
+      <div class="col-md-9">${item.value}</div>      
+    </div>
+    <hr class="hr-space">
+    `));
+
+    divDetail
+      .empty()
+      .append(divCard)
+      .show();
+  }
+
+  // render default view
   getLatestTransactiions();
 
 })();

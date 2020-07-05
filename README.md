@@ -3,9 +3,12 @@ An EtherScan clone example project for the bootcamp.<br>
 https://etherscan.io/
 
 **web3.js**
-This project uses `web3.js` to connect to the Ethereum blockchain.
+
+This project uses `web3.js` to connect to the Ethereum blockchain.<br>
 https://github.com/ethereum/web3.js/
-Docs: https://web3js.readthedocs.io/en/v1.2.8/
+<br>Docs: https://web3js.readthedocs.io/en/v1.2.8/
+
+Unfortunately there is no efficient on-chain way to search for transactions by address, so this will not be supported in this app. It could be implemented using web3js with a brute force linear search starting in the latest block and working backwards- but this would be horribly slow. Apparently Etherscan solves this by indexing data off-chain in a traditional database.
 
 **Infura**
 

@@ -18,25 +18,34 @@
     <div class="bg-light" id="wrapper">
       <header>
         <nav class="navbar narbar-light bg-white">
-          <span class="navbar-brand h1">Academy Eth Scan</span>
+          <a class="navbar-brand h1" href="/">Academy Eth Scan</a>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="navbar-link" href="/">Home</a>
+            </li>
+          </ul>          
           <span class="navbar-text">An Ivan On Tech Bootcamp example project</span>
         </nav>
       </header>
 
       <div class="container" id="main-content">
 
+        <!-- search -->
         <div class="input-group mt-4">
-          <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="search not yet implemented">
+          <input type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="search by transaction hash">
           <div class="input-group-append">
             <button type="button" class="btn btn-primary" id="btnSearch">Search</button>
           </div>          
         </div>
 
-        <div>
-          <!-- container for latest transactions -->
-          <div class="mt-2" id="divLatestBlocks"></div>
-          <div class="mt-2" id="divLatestTrans"></div>
+        <!-- latest transactions view -->
+        <div class="row" id="latest">          
+          <div class="col-lg-6 mt-2" id="divLatestBlocks"></div>
+          <div class="col-lg-6 mt-2" id="divLatestTrans"></div>
         </div>
+
+        <!-- detail view -->
+        <div id="detail"></div>
 
     </div>
 
