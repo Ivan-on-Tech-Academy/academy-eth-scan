@@ -5,28 +5,23 @@
     <title>Academy Eth Scan</title>
 
     <!-- load our libraries  -->
-    <script type="text/javascript" src="assets/lib/jquery-3.4.1.js"></script>
-    <link rel="stylesheet" href="assets/lib/bootstrap-4.5.0-dist/css/bootstrap.min.css">
-    <script src="assets/lib/bootstrap-4.5.0-dist/js/popper.js"></script>
-    <script src="assets/lib/bootstrap-4.5.0-dist/js/bootstrap.min.js"></script>
-    <script src="assets/lib/web3.min.js"></script>
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper-utils.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/web3/dist/web3.min.js"></script>
+    <script src="node_modules/moment/moment.js"></script>
 
     <!-- our styles go here -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/mystyles.css">
+
+    <script type="text/javascript" src="assets/js/formatting.js"></script>
   </head>
   <body>
     <div class="bg-light" id="wrapper">
-      <header>
-        <nav class="navbar narbar-light bg-white">
-          <a class="navbar-brand h1" href="/">Academy Eth Scan</a>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="navbar-link" href="/">Home</a>
-            </li>
-          </ul>          
-          <span class="navbar-text">An Ivan On Tech Bootcamp example project</span>
-        </nav>
-      </header>
+      
+      <!-- header component -->
+      <div id="app-header"></div>
 
       <div class="container" id="main-content">
 
@@ -50,11 +45,14 @@
         </div>
 
         <!-- detail view -->
-        <div id="detail"></div>
+        <div id="app-detail"></div>
 
     </div>
 
-    <!-- load our scripts -->
+    <!-- load our scripts -->    
+    <script type="text/javascript" src="assets/js/data-service.js"></script>
+    <script type="text/javascript" src="assets/js/app-header.js"></script>
+    <script type="text/javascript" src="assets/js/card-list.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>

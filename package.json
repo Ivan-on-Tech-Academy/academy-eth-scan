@@ -1,0 +1,33 @@
+{
+  "name": "academy-eth-scan",
+  "version": "0.0.1",
+  "description": "etherscan clone example project for Ivan on Tech Bootcamp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ivan-on-Tech-Academy/academy-eth-scan.git"
+  },
+  "keywords": [
+    "Ivan",
+    "On",
+    "Tech",
+    "ethereum",
+    "web3"
+  ],
+  "author": "jermay, IvanOnTech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ivan-on-Tech-Academy/academy-eth-scan/issues"
+  },
+  "homepage": "https://github.com/Ivan-on-Tech-Academy/academy-eth-scan#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "moment": "^2.27.0",
+    "popper.js": "^1.16.1",
+    "web3": "^1.2.9"
+  }
+}
