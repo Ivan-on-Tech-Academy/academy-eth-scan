@@ -32,6 +32,18 @@ Create a file in the main project directory called `config.json` and put your In
 }
 ```
 
+To switch the datasource between LIVE and DEV comment/uncomment the appropriate line in `assets/js/data-service.js`.
+The test datasource has 5 blocks from the mainnet including all their transactions in `assets/js/block-data-test.json`.
+
+```javascript
+const datasources = {
+    live: 'LIVE',
+    dev: 'DEV'
+}
+const DATASOURCE = datasources.dev;
+// const DATASOURCE = datasources.live;
+```
+
 **Running the project**
 
 1. Open a terminal. Navigate to where you want to project to be.
